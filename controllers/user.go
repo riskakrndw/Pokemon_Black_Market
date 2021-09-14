@@ -276,11 +276,12 @@ func Logout(c echo.Context) error {
 	}
 
 	//customize output
-	output := UserOutput{
+	output := UserOutput1{
 		ID:    user.ID,
 		Level: level.Name,
 		Email: user.Email,
 		Name:  user.Name,
+		Token: user.Token,
 	}
 
 	return c.JSON(http.StatusOK, output)
