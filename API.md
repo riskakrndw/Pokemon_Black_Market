@@ -8,7 +8,7 @@
 | 3 | [Profile](#profile) | GET | /bos/profile, /operasional/profile, /pengedar/profile | Bos, Operasional, Pengedar | Yes |
 | 4 | [Logout](#logout) | PUT | /bos/logout, /operasional/logout, /pengedar/logout | Bos, Operasional, Pengedar | Yes |
 | 5 | [Search all pokemon from pokeapi](#search-all-pokemon-from-pokeapi) | GET | /search/pokemons | Operasional | Yes |
-| 6 | [Search pokemon by pokemon's name from pokeapi](#search-pokemon-by-pokemon's-name-from-pokeapi) | GET | /search/pokemon | Operasional | Yes |
+| 6 | [Search pokemon by pokemon's name from pokeapi](#search-pokemon-by-pokemons-name-from-pokeapi) | GET | /search/pokemon | Operasional | Yes |
 | 7 | [Create pokemon](#create-pokemon) | POST | /pokemon | Operasional | Yes |
 | 8 | [Update pokemon](#update-pokemon) | PUT | /pokemon | Operasional | Yes |
 | 9 | [Delete pokemon](#delete-pokemon) | DELETE | /pokemon | Operasional | Yes |
