@@ -70,3 +70,11 @@ func Login(email string) (models.User, error) {
 
 	return user, nil
 }
+
+func UpdateUser(user models.User) (models.User, error) {
+	if err := config.DB.Save(&user).Error; err != nil {
+		return user, err
+	}
+
+	return user, nil
+}

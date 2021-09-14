@@ -144,3 +144,6 @@ project/pbm/databases/user.go:71.2,71.18 1 1
 project/pbm/databases/user.go:60.78,62.3 1 1
 project/pbm/databases/user.go:64.16,66.3 1 0
 project/pbm/databases/user.go:67.51,69.3 1 0
+project/pbm/databases/user.go:74.56,75.52 1 1
+project/pbm/databases/user.go:79.2,79.18 1 1
+project/pbm/databases/user.go:75.52,77.3 1 1

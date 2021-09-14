@@ -28,15 +28,18 @@ func New(e *echo.Echo) {
 
 	//-----------Bos only
 	r.GET("/bos/profile", controllers.GetProfile)
+	r.GET("/bos/logout", controllers.Logout)
 
 	//-----------Operasional only
 	r.GET("/operasional/profile", controllers.GetProfile)
+	r.GET("/operasional/logout", controllers.Logout)
 	//Search pokemon from pokeapi
 	r.GET("/search/pokemons", controllers.SearchAllPokemon) // operasional only
 	r.GET("/search/pokemon", controllers.SearchPokemon)     // operasional only
 
 	//-----------Pengedar only
 	r.GET("/pengedar/profile", controllers.GetProfile)
+	r.GET("/pengedar/logout", controllers.Logout)
 
 	//-----------Pokemon
 	r.GET("/pokemons", controllers.GetAllPokemon)        // operasional and pengedar only

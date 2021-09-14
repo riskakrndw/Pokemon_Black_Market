@@ -155,3 +155,24 @@ func TestGetPasswordError(t *testing.T) {
 	_, err := GetPassword("riska@gmail.com")
 	assert.Error(t, err)
 }
+
+func TestUpdateUserSuccess(t *testing.T) {
+	config.ConfigTest()
+	config.DB.Migrator().DropTable(&models.User{})
+	config.DB.Migrator().AutoMigrate(&models.User{})
+	create_user, _ := Register(mock_user)
+	user, err := UpdateUser(create_user)
+	if assert.NoError(t, err) {
+		assert.Equal(t, "Riska", user.Name)
+		assert.Equal(t, "riska@gmail.com", user.Email)
+		assert.Equal(t, "123", user.Password)
+	}
+}
+
+func TestUpdateUserError(t *testing.T) {
+	config.ConfigTest()
+	config.DB.Migrator().DropTable(&models.User{})
+	create_user, _ := Register(mock_user)
+	_, err := UpdateUser(create_user)
+	assert.Error(t, err)
+}

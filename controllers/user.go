@@ -215,7 +215,6 @@ func Login(c echo.Context) error {
 }
 
 func GetProfile(c echo.Context) error {
-
 	//get id user login
 	logged_in_user_id := middlewares.ExtractToken(c)
 	if logged_in_user_id == 0 {
@@ -247,4 +246,42 @@ func GetProfile(c echo.Context) error {
 
 func GetProfileTesting() echo.HandlerFunc {
 	return GetProfile
+}
+
+func Logout(c echo.Context) error {
+	//get id user login
+	logged_in_user_id := middlewares.ExtractToken(c)
+	if logged_in_user_id == 0 {
+		return echo.NewHTTPError(http.StatusUnauthorized, "Please login first")
+	}
+
+	//get customer by id
+	user, err := databases.GetUserById(logged_in_user_id)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, "cannot get data")
+	}
+	user.Token = ""
+	c.Bind(&user)
+	customer_updated, err := databases.UpdateUser(user)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]interface{}{
+			"message": "cannot logout",
+		})
+	}
+
+	//get level name
+	level, err := databases.GetLevel(int(customer_updated.LevelID))
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, "cannot get data")
+	}
+
+	//customize output
+	output := UserOutput{
+		ID:    user.ID,
+		Level: level.Name,
+		Email: user.Email,
+		Name:  user.Name,
+	}
+
+	return c.JSON(http.StatusOK, output)
 }
