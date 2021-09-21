@@ -13,7 +13,7 @@ import (
 
 type OutputTransaction2 struct {
 	Total       int
-	Transaction []Transaction
+	Transaction []Transaction1
 }
 
 type Transaction struct {
@@ -25,6 +25,15 @@ type Transaction struct {
 	Status       string
 }
 
+type Transaction1 struct {
+	EmployeeID uint
+	ID         uint
+	Code       string
+	Date       time.Time
+	Total      int
+	Status     string
+}
+
 type OutputTransaction struct {
 	EmployeeName string
 	ID           uint
@@ -33,6 +42,16 @@ type OutputTransaction struct {
 	Total        int
 	Status       string
 	Pokemon      []Pokemon
+}
+
+type OutputTransaction1 struct {
+	EmployeeID uint
+	ID         uint
+	Code       string
+	Date       time.Time
+	Total      int
+	Status     string
+	Pokemon    []Pokemon
 }
 
 type Pokemon struct {
@@ -195,15 +214,15 @@ func GetAllTransactionSuccess(c echo.Context) error {
 	}
 
 	//customize output
-	var transaction []Transaction
+	var transaction []Transaction1
 	for i := 0; i < len(all_transactions); i++ {
-		new_result := Transaction{
-			EmployeeName: user.Name,
-			ID:           all_transactions[i].ID,
-			Code:         all_transactions[i].Code,
-			Date:         all_transactions[i].DateOfMonth,
-			Total:        all_transactions[i].Total,
-			Status:       all_transactions[i].Status,
+		new_result := Transaction1{
+			EmployeeID: all_transactions[i].UserID,
+			ID:         all_transactions[i].ID,
+			Code:       all_transactions[i].Code,
+			Date:       all_transactions[i].DateOfMonth,
+			Total:      all_transactions[i].Total,
+			Status:     all_transactions[i].Status,
 		}
 		transaction = append(transaction, new_result)
 	}
@@ -249,15 +268,15 @@ func GetAllTransactionFailed(c echo.Context) error {
 	}
 
 	//customize output
-	var transaction []Transaction
+	var transaction []Transaction1
 	for i := 0; i < len(all_transactions); i++ {
-		new_result := Transaction{
-			EmployeeName: user.Name,
-			ID:           all_transactions[i].ID,
-			Code:         all_transactions[i].Code,
-			Date:         all_transactions[i].DateOfMonth,
-			Total:        all_transactions[i].Total,
-			Status:       all_transactions[i].Status,
+		new_result := Transaction1{
+			EmployeeID: all_transactions[i].UserID,
+			ID:         all_transactions[i].ID,
+			Code:       all_transactions[i].Code,
+			Date:       all_transactions[i].DateOfMonth,
+			Total:      all_transactions[i].Total,
+			Status:     all_transactions[i].Status,
 		}
 		transaction = append(transaction, new_result)
 	}
@@ -319,14 +338,14 @@ func GetTransaction(c echo.Context) error {
 		}
 		output_pokemons = append(output_pokemons, new_result)
 	}
-	output := OutputTransaction{
-		EmployeeName: user.Name,
-		ID:           transaction.ID,
-		Code:         transaction.Code,
-		Date:         transaction.DateOfMonth,
-		Total:        transaction.Total,
-		Status:       transaction.Status,
-		Pokemon:      output_pokemons,
+	output := OutputTransaction1{
+		EmployeeID: transaction.UserID,
+		ID:         transaction.ID,
+		Code:       transaction.Code,
+		Date:       transaction.DateOfMonth,
+		Total:      transaction.Total,
+		Status:     transaction.Status,
+		Pokemon:    output_pokemons,
 	}
 
 	return c.JSON(http.StatusOK, output)
