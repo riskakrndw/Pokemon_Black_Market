@@ -10,6 +10,8 @@
     - [Features](#features)
     - [API Documentation](#api-documentation)
   - [System Design](#system-design)
+    - [ERD](#erd)
+    - [Use Case](#use-case)
   - [Getting started](#getting-started)
     - [Installing](#installing)
 
@@ -44,11 +46,11 @@ Application Programming Interface is available at [API page.](API.md)
 
 ## System Design
 
-ERD
+### ERD
 ![Pokemon Black Market-ERD](https://user-images.githubusercontent.com/11256042/137578139-d968c6ff-2c42-4829-816a-4cb49325caf3.jpg)
 
 
-Use Case
+### Use Case
 ![Pokemon Black Market-Use Case](https://user-images.githubusercontent.com/11256042/137578144-53aa21b3-5ddd-4c50-92c8-262fbc9dd6eb.jpg)
 
 
