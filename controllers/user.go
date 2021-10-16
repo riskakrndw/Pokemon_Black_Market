@@ -48,7 +48,7 @@ func RegisterBos(c echo.Context) error {
 
 	//check is email exists?
 	is_email_exists, _ := databases.CheckEmail(input_user.Email)
-	if is_email_exists == true {
+	if is_email_exists {
 		return c.JSON(http.StatusBadRequest, "Email already exists")
 	}
 

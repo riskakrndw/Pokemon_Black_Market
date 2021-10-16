@@ -225,7 +225,7 @@ func CreatePokemon(c echo.Context) error {
 	var pokemon_type models.PokemonType
 	for i := 0; i < len(response_object.Types); i++ {
 		check_type, is_type_pokemon_exist, _ := databases.CheckPokemonType(response_object.Types[i])
-		if is_type_pokemon_exist == false {
+		if !is_type_pokemon_exist {
 			pokemon_type, err = databases.CreatePokemonType(response_object.Types[i])
 			if err != nil {
 				return c.JSON(http.StatusInternalServerError, "cannot insert data")
@@ -241,7 +241,7 @@ func CreatePokemon(c echo.Context) error {
 	var pokemon_ability models.PokemonAbility
 	for i := 0; i < len(response_object.Abilities); i++ {
 		check_ability, is_ability_pokemon_exist, _ := databases.CheckPokemonAbility(response_object.Abilities[i])
-		if is_ability_pokemon_exist == false {
+		if !is_ability_pokemon_exist {
 			pokemon_ability, err = databases.CreatePokemonAbility(response_object.Abilities[i])
 			if err != nil {
 				return c.JSON(http.StatusInternalServerError, "cannot insert data")
@@ -252,48 +252,20 @@ func CreatePokemon(c echo.Context) error {
 		pokemon_abilities = append(pokemon_abilities, pokemon_ability)
 	}
 
-	//get pokemon types
-	var data_pokemon_types []models.PokemonType
-	var get_pokemon_type models.PokemonType
-	for i := 0; i < len(pokemon_types); i++ {
-		get_pokemon_type, err = databases.GetPokemonTypesByName(pokemon_types[i].Name)
-		if err != nil {
-			return c.JSON(http.StatusInternalServerError, "cannot get data")
-		}
-		data_pokemon_types = append(data_pokemon_types, get_pokemon_type)
-	}
-
 	//create detail types
-	var detail_types []models.DetailType
-	var detail_type models.DetailType
-	for i := 0; i < len(data_pokemon_types); i++ {
-		detail_type, err = databases.CreateDetailType(pokemon.ID, data_pokemon_types[i].ID)
+	for i := 0; i < len(pokemon_types); i++ {
+		_, err = databases.CreateDetailType(pokemon.ID, pokemon_types[i].ID)
 		if err != nil {
 			return c.JSON(http.StatusInternalServerError, "cannot insert data")
 		}
-		detail_types = append(detail_types, detail_type)
-	}
-
-	//get pokemon ability
-	var data_pokemon_abilities []models.PokemonAbility
-	var get_pokemon_ability models.PokemonAbility
-	for i := 0; i < len(pokemon_abilities); i++ {
-		get_pokemon_ability, err = databases.GetPokemonAbilitiesByName(pokemon_abilities[i].Name)
-		if err != nil {
-			return c.JSON(http.StatusInternalServerError, "cannot get data")
-		}
-		data_pokemon_abilities = append(data_pokemon_abilities, get_pokemon_ability)
 	}
 
 	//create detail abilities
-	var detail_abilities []models.DetailAbility
-	var detail_ability models.DetailAbility
-	for i := 0; i < len(data_pokemon_abilities); i++ {
-		detail_ability, err = databases.CreateDetailAbility(pokemon.ID, data_pokemon_abilities[i].ID)
+	for i := 0; i < len(pokemon_abilities); i++ {
+		_, err := databases.CreateDetailAbility(pokemon.ID, pokemon_abilities[i].ID)
 		if err != nil {
 			return c.JSON(http.StatusInternalServerError, "cannot insert data")
 		}
-		detail_abilities = append(detail_abilities, detail_ability)
 	}
 
 	//customize output
@@ -304,8 +276,8 @@ func CreatePokemon(c echo.Context) error {
 		Height:    pokemon.Height,
 		Price:     pokemon.Price,
 		Stock:     pokemon.Stock,
-		Types:     data_pokemon_types,
-		Abilities: data_pokemon_abilities,
+		Types:     pokemon_types,
+		Abilities: pokemon_abilities,
 	}
 
 	return c.JSON(http.StatusOK, output)
